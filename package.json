@@ -23,28 +23,16 @@
     "url": "https://github.com/abberdeen/SciChartBlazor/issues"
   },
   "scripts": {
-    "preshrinkwrap": "git checkout -- npm-shrinkwrap.json",
-    "postshrinkwrap": "git checkout -- npm-shrinkwrap.json"
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
-  "devDependencies": {
-    "gulp": "4.0.2",
-    "gulp-clean": "^0.4.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-include": "^2.4.1",
-    "gulp-newer": "^1.4.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-typescript": "^2.12.2",
-    "gulp-uglify": "^3.0.2",
-    "through": "^2.3.8",
-    "typescript": "^4.8.4",
-    "vinyl": "^3.0.0",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+  "devDependencies": { 
+    "copy-webpack-plugin": "^6.0.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
-  "dependencies": {
-    "node": "^10.16.3",
-    "gulp-better-rollup": "^4.0.1",
-    "gulp-javascript-obfuscator": "^1.1.6",
-    "rollup-plugin-babel": "^4.4.0"
+  "dependencies": { 
+    "scichart": "^3.0.284"
   }
 }

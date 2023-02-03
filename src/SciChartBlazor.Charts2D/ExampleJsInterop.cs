@@ -18,7 +18,7 @@ namespace SciChartBlazor.Charts2D
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/SciChartBlazor.CandlestickChart/exampleJsInterop.js").AsTask());
+                "import", "./_content/SciChartBlazor.Charts2D/exampleJsInterop.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

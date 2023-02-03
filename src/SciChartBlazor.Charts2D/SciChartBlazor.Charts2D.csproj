@@ -114,6 +114,15 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\" />
+	</ItemGroup>
+
+	<Target Name="PublishRunWebpack" AfterTargets="Build">
+		<Exec WorkingDirectory="Interop\" Command="npm install" />
+		<Exec WorkingDirectory="Interop\" Command="npm run build" />
+	</Target>
+
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties tsconfig_1json__JsonSchema="" />
