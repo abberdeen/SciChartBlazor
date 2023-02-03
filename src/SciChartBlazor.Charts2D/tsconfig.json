@@ -1,0 +1,22 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": false,
+    "target": "ES6",
+    "rootDir": "./",
+    "outDir": "./wwwroot",
+    "module": "ES6"
+  },
+  "include": [ "Interop/**/*.ts" ],
+  "exclude": [
+    "node_modules/**/*.*",
+    "**/*.spec.ts",
+    "**/*.d.ts",
+    "wwwroot"
+  ]
+}

@@ -1,0 +1,123 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<!-- Version patched by Github Workflow Actions, modify on build config if needed -->
+		<Version></Version>
+
+		<!-- Frameworks and language features -->
+		<TargetFrameworks>net5;net6;net7</TargetFrameworks>
+		<!-- Set the CheckEolTargetFramework property to false to fix the warning -->
+		<CheckEolTargetFramework>false</CheckEolTargetFramework>
+
+		<LangVersion>11.0</LangVersion>
+		<RazorLangVersion>3.0</RazorLangVersion>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+		<OutputType>Library</OutputType>
+		<Description>Unofficial Blazor libarary that provides access to a SciChart.js charts.</Description>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<GenerateMvcApplicationPartsAssemblyAttributes>true</GenerateMvcApplicationPartsAssemblyAttributes>
+		<RazorCompileOnBuild>true</RazorCompileOnBuild>
+		<IncludeRazorContentInPack>false</IncludeRazorContentInPack>
+		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+		<EnableDefaultRazorGenerateItems>true</EnableDefaultRazorGenerateItems>
+
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+
+		<!-- Assembly metadata -->
+		<Product>SciChartBlazor.Charts2D</Product>
+		<Company>Abdurahim Khudoyberdiev</Company>
+		<Authors>Abdurahim Khudoyberdiev</Authors>
+		<RootNamespace>SciChartBlazor.Charts2D</RootNamespace>
+		<AssemblyName>SciChartBlazor.Charts2D</AssemblyName>
+		<AssemblyTitle>SciChartBlazor.Charts2D</AssemblyTitle>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+
+		<!--Package-->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Title>SciChartBlazor.Charts2D</Title>
+		<Summary>Unofficial Blazor libarary that provides access to a SciChart.js charts.</Summary>
+		<Copyright>Copyright © 2023</Copyright>
+		<PackageId>SciChartBlazor.Charts2D</PackageId>
+		<PackageProjectUrl>https://github.com/abberdeen/SciChartBlazor/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/abberdeen/SciChartBlazor/src/SciChartBlazor.Charts2D</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReleaseNotes>https://github.com/abberdeen/SciChartBlazor/releases</PackageReleaseNotes>
+		<PackageTags>scichartm candlestick,charts,blazor,web-api,razor,components</PackageTags>
+		<!--<PackageIcon>packageIcon.png</PackageIcon>-->
+		<!--<PackageIcon>https://github.com/abberdeen/SciChartBlazor/.github/images/icon.png</PackageIcon>-->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<EmbedAllSources>true</EmbedAllSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+
+	<!--<Target Name="CustomContentTarget">
+		<ItemGroup>
+			<TfmSpecificPackageFile Include="wwwroot/js/SciChartBlazor.js">
+				<PackagePath>wwwroot/js</PackagePath>
+			</TfmSpecificPackageFile> 
+		</ItemGroup>
+	</Target>-->
+	<ItemGroup>
+		<None Include="..\..\LICENSE.txt" Pack="true" PackagePath="" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="" />
+		<!-- The nuget package icon -->
+		<!--<None Include="logo.png" Pack="true" PackagePath="" />-->
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<!-- ignore the tsconfig.json file in package -->
+		<Content Remove="tsconfig.json" />
+		<None Include="tsconfig.json" CopyToOutputDirectory="Never"></None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.9.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework) == 'net5'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework) == 'net6'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework) == 'net7'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties tsconfig_1json__JsonSchema="" />
+		</VisualStudio>
+	</ProjectExtensions>
+
+</Project>
