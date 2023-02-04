@@ -8,22 +8,28 @@ module.exports = {
     },
     module: {
         rules: [
-           
-        ],
+            {
+                test: /\.(js|jsx|tsx|ts)$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            }
+        ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        modules: [path.resolve(__dirname, './src/SciChartBlazor.Charts2D/Interop'), "node_modules"],
+        extensions: ['.ts', '.js'],
     }, 
     output: {
         filename: 'scichartblazor-chart2d.min.js',
         path: path.resolve(__dirname, './src/SciChartBlazor.Charts2D/wwwroot'),
+        library: "sciChartBlazor"
     },
     plugins: [
-        new CopyPlugin({
-            patterns: [ 
-                { from: "node_modules/scichart/_wasm/scichart2d.data", to: "" },
-                { from: "node_modules/scichart/_wasm/scichart2d.wasm", to: "" }
-            ]
-        })
+        //new CopyPlugin({
+        //    patterns: [ 
+        //        { from: "node_modules/scichart/_wasm/scichart2d.data", to: "" },
+        //        { from: "node_modules/scichart/_wasm/scichart2d.wasm", to: "" }
+        //    ]
+        //})
     ]
 };

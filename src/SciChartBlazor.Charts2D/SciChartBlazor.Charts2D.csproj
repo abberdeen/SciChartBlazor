@@ -113,9 +113,9 @@
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
-	  <Folder Include="wwwroot\" />
+		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<Target Name="PublishRunWebpack" AfterTargets="Build">

@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using SciChartBlazor.Charts2D.Models;
 
 <PageTitle>Index</PageTitle>
 
@@ -8,4 +9,32 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<CandlestickChart/>
+<CandlestickChart Height="500" Width="900" @ref="_chart"/>
+@code {
+
+    private CandlestickChart? _chart;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _chart != null)
+        {
+            await _chart.Init();
+
+            var dataSeries = new List<DataPoint>();
+
+            for (int i = 0; i < 100; i++)
+            {
+                dataSeries.Add(new DataPoint(i, Math.Sin(i * 0.1)));
+            }
+
+            var xyDataSeries = new FastLineRenderableSeries
+                {
+                    Stroke = "#20f9bc",
+                    StrokeThickness = 5,
+                    DataSeries = dataSeries
+                };
+
+            await _chart.AddRenderableSeries(xyDataSeries);
+        }
+    }
+}
