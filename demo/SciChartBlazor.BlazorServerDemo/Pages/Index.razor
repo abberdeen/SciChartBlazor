@@ -1,5 +1,7 @@
 ﻿@page "/"
-@using SciChartBlazor.Charts2D.Models;
+@using SciChartBlazor.Charts2D.Data.Model;
+@using SciChartBlazor.Charts2D;
+@using SciChartBlazor.Charts2D.Data.Model.DataSeries;
 
 <PageTitle>Index</PageTitle>
 
@@ -9,10 +11,27 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<CandlestickChart Height="500" Width="900" @ref="_chart"/>
-@code {
+<SciChartSurface Height="500" Width="900">
+    @*  <FastCandlestickRenderableSeries
+    DataSeries="@DataSeries"
+        Stroke="1" @ref="_chart">
 
-    private CandlestickChart? _chart;
+    </FastCandlestickRenderableSeries>
+
+  <XAxis>
+        <CategoryDateTimeAxis />
+    </XAxis>
+
+    <YAxis>
+        <NumericAxis />
+    </YAxis>*@
+</SciChartSurface>
+
+
+@code {
+    private Charts2D.FastCandlestickRenderableSeries? _chart;
+
+    private List<DataPoint> DataSeries = new List<DataPoint>();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -20,21 +39,19 @@ Welcome to your new app.
         {
             await _chart.Init();
 
-            var dataSeries = new List<DataPoint>();
-
             for (int i = 0; i < 100; i++)
             {
-                dataSeries.Add(new DataPoint(i, Math.Sin(i * 0.1)));
+                DataSeries.Add(new DataPoint(i, Math.Sin(i * 0.1)));
             }
 
-            var xyDataSeries = new FastLineRenderableSeries
-                {
-                    Stroke = "#20f9bc",
-                    StrokeThickness = 5,
-                    DataSeries = dataSeries
-                };
+            //var xyDataSeries = new FastLineRenderableSeries()
+            //    {
+            //        Stroke = "#20f9bc",
+            //        StrokeThickness = 5,
+            //        DataSeries = DataSeries
+            //    };
 
-            await _chart.AddRenderableSeries(xyDataSeries);
+            //await _chart.AddRenderableSeries(xyDataSeries);
         }
     }
 }

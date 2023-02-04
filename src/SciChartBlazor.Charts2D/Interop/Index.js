@@ -22,6 +22,7 @@ var scichart_1 = require("scichart");
 // static func. Call once. load wasm from CDN
 scichart_1.SciChartSurface.useWasmFromCDN();
 globalThis.chartInstances = {};
-__exportStar(require("./BaseSciChart"), exports);
-__exportStar(require("./CandlestickChart"), exports);
+__exportStar(require("./SciChartContext"), exports);
+__exportStar(require("./SciChartSurface"), exports);
+__exportStar(require("./RenderableSeries"), exports);
 //# sourceMappingURL=Index.js.map

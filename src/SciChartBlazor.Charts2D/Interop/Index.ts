@@ -13,5 +13,6 @@ declare global {
 }
 globalThis.chartInstances = {};
 
-export * from "./BaseSciChart"
-export * from "./CandlestickChart"
+export * from "./SciChartContext"
+export * from "./SciChartSurface"
+export * from "./RenderableSeries"

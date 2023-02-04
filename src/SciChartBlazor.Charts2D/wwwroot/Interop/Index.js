@@ -6,5 +6,6 @@ import { SciChartSurface } from "scichart";
 // static func. Call once. load wasm from CDN
 SciChartSurface.useWasmFromCDN();
 globalThis.chartInstances = {};
-export * from "./BaseSciChart";
-export * from "./CandlestickChart";
+export * from "./SciChartContext";
+export * from "./SciChartSurface";
+export * from "./RenderableSeries";

@@ -60,6 +60,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Candlestick\**" />
+	  <Compile Remove="Core\**" />
+	  <Content Remove="Candlestick\**" />
+	  <Content Remove="Core\**" />
+	  <EmbeddedResource Remove="Candlestick\**" />
+	  <EmbeddedResource Remove="Core\**" />
+	  <None Remove="Candlestick\**" />
+	  <None Remove="Core\**" />
+	  <TypeScriptCompile Remove="Candlestick\**" />
+	  <TypeScriptCompile Remove="Core\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
