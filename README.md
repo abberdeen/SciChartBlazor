@@ -1,4 +1,4 @@
-# Webzor
+# SciChartBlazor
 Blazor libarary that wraps SciChart.js's chart components
 
 #Project edit

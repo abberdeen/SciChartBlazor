@@ -12,9 +12,9 @@ namespace SciChartBlazor.Charts2D.Services
     {
         private static Lazy<RenderableSeriesService> renderableSeries;
 
-        public SciChartSurfaceService( ref ElementReference element)
+        public SciChartSurfaceService(IJSRuntime jsRuntime, ElementReference element)
         {
-            renderableSeries = new Lazy<RenderableSeriesService>(() => new RenderableSeriesService(JSRuntime, element));
+            renderableSeries = new Lazy<RenderableSeriesService>(() => new RenderableSeriesService(jsRuntime, element));
         }
 
         public RenderableSeriesService RenderableSeries => renderableSeries.Value;

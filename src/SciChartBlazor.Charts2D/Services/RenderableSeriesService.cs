@@ -12,17 +12,17 @@ namespace SciChartBlazor.Charts2D.Services
 {
     public class RenderableSeriesService
     {
-        private IJSRuntime JSRuntime;
-        private ElementReference element;
+        private IJSRuntime _jsRuntime;
+        private ElementReference _element;
         public RenderableSeriesService(IJSRuntime JSRuntime, ElementReference element)
         { 
-            this.element = element;
-            this.JSRuntime = JSRuntime; 
+            this._element = element;
+            this._jsRuntime = JSRuntime; 
         }
 
         public async Task Add(FastLineRenderableSeries fastLineRenderableSeries)
         {
-            await JSRuntime.InvokeVoidAsync("sciChartBlazor.appendFastLineRenderableSeries", element, fastLineRenderableSeries);
+            await _jsRuntime.InvokeVoidAsync("sciChartBlazor.appendFastLineRenderableSeries", _element, fastLineRenderableSeries);
         }
     }
 }
