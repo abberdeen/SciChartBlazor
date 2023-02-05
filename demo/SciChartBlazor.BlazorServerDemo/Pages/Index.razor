@@ -44,6 +44,7 @@ Welcome to your new app.
                 DataSeries.Add(new DataPoint(i, Math.Sin(i * 0.1)));
             }
 
+            await _chart.Surface.RenderableSeries.Add( new FastLineRenderableSeries());
             //var xyDataSeries = new FastLineRenderableSeries()
             //    {
             //        Stroke = "#20f9bc",

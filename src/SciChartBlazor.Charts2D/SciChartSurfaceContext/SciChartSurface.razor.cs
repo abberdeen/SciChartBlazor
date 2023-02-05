@@ -10,12 +10,22 @@ using System.Threading.Tasks;
 
 namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
 {
-    public partial class SciChartSurface: ComponentBase, IAsyncDisposable
+    public partial class SciChartSurface : ComponentBase, IAsyncDisposable
     {
         [Inject]
         internal IJSRuntime JSRuntime { get; set; }
 
         protected ElementReference _chartRoot;
+        private Lazy<SciChartSurfaceService> sciChartSurface;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                sciChartSurface = new Lazy<SciChartSurfaceService>(()=> new SciChartSurfaceService(ref _chartRoot));
+            }
+        }
+        public SciChartSurfaceService Surface => sciChartSurface.Value;
 
         public string Id { get; private set; } = "scichart-root-" + Guid.NewGuid().ToString();
 
