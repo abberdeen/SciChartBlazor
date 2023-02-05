@@ -1,33 +1,64 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SciChartBlazor.Charts2D.Data.Model.DataSeries;
+using SciChartBlazor.Charts2D.Model.DataSeries;
 using SciChartBlazor.Charts2D.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
 {
     public partial class SciChartSurface : ComponentBase, IAsyncDisposable
     {
         [Inject]
-        internal IJSRuntime JSRuntime { get; set; }
+        internal IJSRuntime jsRuntime { get; set; }
+
+        protected Lazy<RenderableSeriesService> renderableSeries;
+        protected Lazy<AnnotationsService> annotations;
+        protected Lazy<ModifiersService> modifiers;
+        protected Lazy<AxisService> axis;
 
         protected ElementReference _chartRoot;
-        private Lazy<SciChartSurfaceService> sciChartSurface;
+
+        protected override async Task OnInitializedAsync()
+        { 
+            await base.OnInitializedAsync(); 
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                sciChartSurface = new Lazy<SciChartSurfaceService>(()=> new SciChartSurfaceService(ref _chartRoot));
+                await Initialize();
+
+                renderableSeries = new Lazy<RenderableSeriesService>(
+                () => new RenderableSeriesService(jsRuntime, _chartRoot));
+
+                annotations = new Lazy<AnnotationsService>(
+                    () => new AnnotationsService(jsRuntime, _chartRoot));
+
+                modifiers = new Lazy<ModifiersService>(
+                   () => new ModifiersService(jsRuntime, _chartRoot));
+
+                axis = new Lazy<AxisService>(
+                    () => new AxisService(jsRuntime, _chartRoot));
             }
         }
-        public SciChartSurfaceService Surface => sciChartSurface.Value;
+         
+        protected async Task Initialize()
+        {
+            await jsRuntime.InvokeVoidAsync(JSInteropCommand.Init, _chartRoot);
+        }
 
-        public string Id { get; private set; } = "scichart-root-" + Guid.NewGuid().ToString();
+        //public AxisBase XAxis { get; set; }
+        //public AxisBase YAxis { get; set; }
+        public RenderableSeriesService RenderableSeries => renderableSeries.Value;
+        public AnnotationsService Annotations => annotations.Value;
+        public ModifiersService Modifiers => modifiers.Value;
+        public AxisService Axis => axis.Value;
 
         [Parameter]
         public int Width { get; set; } = 800;
@@ -35,19 +66,11 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
         [Parameter]
         public int Height { get; set; } = 400;
 
-        public async Task Init()
-        {
-            await JSRuntime.CallVoidAsync(InteropCommand.Init, _chartRoot);
-        }
-
-        public async Task AddRenderableSeries(FastLineRenderableSeries fastLineRenderableSeries)
-        {
-            await JSRuntime.InvokeVoidAsync("sciChartBlazor.appendFastLineRenderableSeries", _chartRoot, fastLineRenderableSeries);
-        }
+        public string Id { get; private set; } = "scichart-root-" + Guid.NewGuid().ToString();
 
         public ValueTask DisposeAsync()
         {
-            return JSRuntime.CallVoidAsync(InteropCommand.Unregister, _chartRoot);
+            return jsRuntime.InvokeVoidAsync(JSInteropCommand.Unregister, _chartRoot);
         }
     }
 }

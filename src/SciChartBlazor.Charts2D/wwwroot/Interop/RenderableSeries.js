@@ -7,18 +7,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { FastLineRenderableSeries, XyDataSeries } from "scichart";
+import { chartBuilder } from "scichart";
 import { resolveContext } from "./SciChartContext";
-export function appendFastLineRenderableSeries(element, series) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { sciChartSurface, wasmContext } = resolveContext(element);
-        const xyDataSeries = new XyDataSeries(wasmContext);
-        series.dataSeries.map(({ x, y }) => xyDataSeries.append(x, y));
-        const lineSeries = new FastLineRenderableSeries(wasmContext, {
-            stroke: series.stroke || "#ff6600",
-            strokeThickness: series.strokeThickness || 2,
-            dataSeries: xyDataSeries,
+export var RenderableSeries;
+(function (RenderableSeries) {
+    function add(element, jsonString) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { sciChartSurface, wasmContext } = resolveContext(element);
+            const seriesArray = chartBuilder.buildSeries(wasmContext, jsonString);
+            sciChartSurface.renderableSeries.add(...seriesArray);
+            sciChartSurface.zoomExtents();
+            var ids = seriesArray.map(function (i) {
+                return i.id;
+            });
+            return ids;
         });
-        sciChartSurface.renderableSeries.add(lineSeries);
-    });
-}
+    }
+    RenderableSeries.add = add;
+    function remove(element, id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { sciChartSurface, wasmContext } = resolveContext(element);
+            var item = sciChartSurface.renderableSeries.getById(id);
+            sciChartSurface.renderableSeries.remove(item);
+        });
+    }
+    RenderableSeries.remove = remove;
+    function update(element, id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { sciChartSurface, wasmContext } = resolveContext(element);
+            var item = sciChartSurface.renderableSeries.getById(id);
+            const newdata = chartBuilder.buildDataSeries(wasmContext, data);
+            item.dataSeries = newdata;
+        });
+    }
+    RenderableSeries.update = update;
+})(RenderableSeries || (RenderableSeries = {}));

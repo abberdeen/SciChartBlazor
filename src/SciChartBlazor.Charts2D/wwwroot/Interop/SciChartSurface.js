@@ -20,8 +20,20 @@ export function init(element) {
         }
     });
 }
+export function clear(element) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { sciChartSurface, wasmContext } = resolveContext(element);
+        sciChartSurface.renderableSeries.clear();
+        sciChartSurface.annotations.clear();
+    });
+}
 export function unregister(element) {
     return __awaiter(this, void 0, void 0, function* () {
         delete globalThis.chartInstances[element.id];
+    });
+}
+export function setLicenseKey(key) {
+    return __awaiter(this, void 0, void 0, function* () {
+        SciChartSurface.setRuntimeLicenseKey(key);
     });
 }

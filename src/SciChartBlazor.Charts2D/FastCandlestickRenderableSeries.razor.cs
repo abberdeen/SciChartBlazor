@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using SciChartBlazor.Charts2D.Data.Model.DataSeries;
+using SciChartBlazor.Charts2D.Model.DataSeries;
 using SciChartBlazor.Charts2D.SciChartSurfaceContext;
 using SciChartBlazor.Charts2D.Services;
 using System;

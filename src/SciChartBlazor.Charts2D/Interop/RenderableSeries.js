@@ -36,28 +36,52 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.appendFastLineRenderableSeries = void 0;
+exports.RenderableSeries = void 0;
 var scichart_1 = require("scichart");
 var SciChartContext_1 = require("./SciChartContext");
-function appendFastLineRenderableSeries(element, series) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, sciChartSurface, wasmContext, xyDataSeries, lineSeries;
-        return __generator(this, function (_b) {
-            _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
-            xyDataSeries = new scichart_1.XyDataSeries(wasmContext);
-            series.dataSeries.map(function (_a) {
-                var x = _a.x, y = _a.y;
-                return xyDataSeries.append(x, y);
+var RenderableSeries;
+(function (RenderableSeries) {
+    function add(element, jsonString) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, sciChartSurface, wasmContext, seriesArray, ids;
+            var _b;
+            return __generator(this, function (_c) {
+                _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
+                seriesArray = scichart_1.chartBuilder.buildSeries(wasmContext, jsonString);
+                (_b = sciChartSurface.renderableSeries).add.apply(_b, seriesArray);
+                sciChartSurface.zoomExtents();
+                ids = seriesArray.map(function (i) {
+                    return i.id;
+                });
+                return [2 /*return*/, ids];
             });
-            lineSeries = new scichart_1.FastLineRenderableSeries(wasmContext, {
-                stroke: series.stroke || "#ff6600",
-                strokeThickness: series.strokeThickness || 2,
-                dataSeries: xyDataSeries,
-            });
-            sciChartSurface.renderableSeries.add(lineSeries);
-            return [2 /*return*/];
         });
-    });
-}
-exports.appendFastLineRenderableSeries = appendFastLineRenderableSeries;
+    }
+    RenderableSeries.add = add;
+    function remove(element, id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, sciChartSurface, wasmContext, item;
+            return __generator(this, function (_b) {
+                _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
+                item = sciChartSurface.renderableSeries.getById(id);
+                sciChartSurface.renderableSeries.remove(item);
+                return [2 /*return*/];
+            });
+        });
+    }
+    RenderableSeries.remove = remove;
+    function update(element, id, data) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, sciChartSurface, wasmContext, item, newdata;
+            return __generator(this, function (_b) {
+                _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
+                item = sciChartSurface.renderableSeries.getById(id);
+                newdata = scichart_1.chartBuilder.buildDataSeries(wasmContext, data);
+                item.dataSeries = newdata;
+                return [2 /*return*/];
+            });
+        });
+    }
+    RenderableSeries.update = update;
+})(RenderableSeries = exports.RenderableSeries || (exports.RenderableSeries = {}));
 //# sourceMappingURL=RenderableSeries.js.map

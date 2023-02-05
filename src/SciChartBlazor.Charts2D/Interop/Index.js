@@ -25,4 +25,8 @@ globalThis.chartInstances = {};
 __exportStar(require("./SciChartContext"), exports);
 __exportStar(require("./SciChartSurface"), exports);
 __exportStar(require("./RenderableSeries"), exports);
+__exportStar(require("./Annotations"), exports);
+__exportStar(require("./Modifiers"), exports);
+__exportStar(require("./Axis"), exports);
+__exportStar(require("./Zoom"), exports);
 //# sourceMappingURL=Index.js.map

@@ -15,4 +15,8 @@ globalThis.chartInstances = {};
 
 export * from "./SciChartContext"
 export * from "./SciChartSurface"
-export * from "./RenderableSeries"
+export * from "./RenderableSeries" 
+export * from "./Annotations" 
+export * from "./Modifiers" 
+export * from "./Axis" 
+export * from "./Zoom" 

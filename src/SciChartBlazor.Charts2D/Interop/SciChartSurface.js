@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unregister = exports.init = void 0;
+exports.setLicenseKey = exports.unregister = exports.clear = exports.init = void 0;
 var scichart_1 = require("scichart");
 var SciChartContext_1 = require("./SciChartContext");
 function init(element) {
@@ -60,6 +60,18 @@ function init(element) {
     });
 }
 exports.init = init;
+function clear(element) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, sciChartSurface, wasmContext;
+        return __generator(this, function (_b) {
+            _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
+            sciChartSurface.renderableSeries.clear();
+            sciChartSurface.annotations.clear();
+            return [2 /*return*/];
+        });
+    });
+}
+exports.clear = clear;
 function unregister(element) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -69,4 +81,13 @@ function unregister(element) {
     });
 }
 exports.unregister = unregister;
+function setLicenseKey(key) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            scichart_1.SciChartSurface.setRuntimeLicenseKey(key);
+            return [2 /*return*/];
+        });
+    });
+}
+exports.setLicenseKey = setLicenseKey;
 //# sourceMappingURL=SciChartSurface.js.map
