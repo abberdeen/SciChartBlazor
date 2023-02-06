@@ -1,0 +1,169 @@
+﻿@page "/binance"
+@using SciChartBlazor.BlazorServerDemo.Data;
+@using SciChartBlazor.Charts2D;
+@using SciChartBlazor.Charts2D.Model.Axes;
+@using SciChartBlazor.Charts2D.Model.DataSeries;
+@using SciChartBlazor.Charts2D.Model.Modifiers;
+@using SciChartBlazor.Charts2D.Model.PointMarkers;
+@using SciChartBlazor.Charts2D.Model.RenderableSeries;
+@using SciChartBlazor.Charts2D.Model;
+@using SciChartBlazor.Charts2D.Model.Styles;
+
+<PageTitle>Index</PageTitle> 
+
+
+<SciChartSurface Height="500" Width="900" @ref="_sciChartSurface">
+</SciChartSurface> 
+
+@code {
+    private SciChartSurface? _sciChartSurface;
+
+    private const string Y_AXIS_VOLUME_ID = "Y_AXIS_VOLUME_ID";
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _sciChartSurface != null)
+        {
+            await _sciChartSurface.Initialize();
+
+            // Add an XAxis of type DateTimeAxis
+            // Note for crypto data this is fine, but for stocks/forex you will need to use CategoryAxis which collapses gaps at weekends
+            // In future we have a hybrid IndexDateAxis which 'magically' solves problems of different # of points in stock market datasetd with gaps
+            var xAxis = new DateTimeNumericAxis();
+
+            // autoRange.never as we're setting visibleRange explicitly below. If you dont do this, leave this flag default
+            xAxis.AutoRange = AutoRange.Never;
+
+            await _sciChartSurface.AddXAxis(xAxis);
+
+            // Create a NumericAxis on the YAxis with 2 Decimal Places
+            var yAxis = new NumericAxis()
+                {
+                    GrowBy = new NumberRange(0.1, 0.1),
+                    LabelFormat = NumericFormat.Decimal,
+                    LabelPrecision = 2,
+                    //LabelPrefix = "$",
+                    AutoRange = AutoRange.Always
+                };
+            await _sciChartSurface.AddYAxis(yAxis);
+
+            // Create a secondary YAxis to host volume data on its own scale
+            var yAxis2 = new NumericAxis()
+                {
+                    Id = Y_AXIS_VOLUME_ID,
+                    GrowBy = new NumberRange(0, 4),
+                    IsVisible = false,
+                    AutoRange = AutoRange.Always
+                };
+            await _sciChartSurface.AddYAxis(yAxis2);
+
+
+            // Fetch data from now to 300 1hr candles ago
+            var endDate = DateTime.Now;
+            var startDate = endDate.AddHours(-300);
+            var priceBars = SimpleBinanceService.GetCandles("BTCUSDT", "1h", startDate, endDate);
+
+            // Maps PriceBar { date, open, high, low, close, volume } to structure-of-arrays expected by scichart
+            var xValues = priceBars.Select(x => x.date).ToList();
+            var openValues = priceBars.Select(x => x.open).ToList();
+            var highValues = priceBars.Select(x => x.high).ToList();
+            var lowValues = priceBars.Select(x => x.low).ToList();
+            var closeValues = priceBars.Select(x => x.close).ToList();
+            var volumeValues = priceBars.Select(x => x.volume).ToList();
+
+            // Zoom to the latest 100 candles
+            var startViewportRange = startDate;
+            startViewportRange.AddHours(-100);
+
+            xAxis.VisibleRange = new NumberRange(new DateTimeOffset(startViewportRange).ToUnixTimeMilliseconds() / 1000, new DateTimeOffset(endDate).ToUnixTimeMilliseconds() / 1000);
+
+            // Create and add the Candlestick series
+            // The Candlestick Series requires a special dataseries type called OhlcDataSeries with o,h,l,c and date values
+            var candleDataSeries = new OhlcDataSeries<long>(xValues, openValues, highValues, lowValues, closeValues);
+
+            var candlestickSeries = new FastCandlestickRenderableSeries<long>(candleDataSeries);
+            //        {
+            //            Stroke = appTheme.ForegroundColor, // used by cursorModifier below
+            //StrokeThickness = 1,
+            //BrushUp = appTheme.VividGreen + "77",
+            //BrushDown = appTheme.MutedRed + "77",
+            //StrokeUp = appTheme.VividGreen,
+            //StrokeDown = appTheme.MutedRed
+            //};
+            await _sciChartSurface.RenderableSeries.Add(candlestickSeries);
+
+            // Add an Ohlcseries. this will be invisible to begin with
+            var ohlcSeries = new FastOhlcRenderableSeries<long>(candleDataSeries)
+                {
+                    StrokeThickness = 1,
+                    //DataPointWidth = 0.9,
+                    //StrokeUp = appTheme.VividGreen,
+                    //StrokeDown = appTheme.MutedRed,
+                    IsVisible = false
+                };
+
+            await _sciChartSurface.RenderableSeries.Add(ohlcSeries);
+
+            // Add some moving averages using SciChart's filters/transforms API
+            // when candleDataSeries updates, XyMovingAverageFilter automatically recomputes
+            //var xy = new XyMovingAverageFilter(candleDataSeries, {
+            //        dataSeriesName = "Moving Average (20)",
+            //        length = 20
+            //    };
+            //await _sciChartSurface.RenderableSeries.Add(
+            //    new FastLineRenderableSeries()
+            //    {
+            //        // Stroke = appTheme.VividSkyBlue
+            //    });
+
+            //await _sciChartSurface.RenderableSeries.Add(
+            //    new FastLineRenderableSeries(wasmContext, {
+            //        dataSeries = new XyMovingAverageFilter(candleDataSeries, {
+            //                dataSeriesName = "Moving Average (50)",
+            //                length = 50
+            //        }),
+            //        stroke = appTheme.VividPink
+            //    })
+            //    );
+
+            // Add volume data onto the chart
+            var xyDataSeries = new XyDataSeries<long, long>(xValues, volumeValues)
+                {
+                    DataSeriesName = "Volume"
+                };
+            var columnSeries = new FastColumnRenderableSeries<long,long>(xyDataSeries)
+                {
+                    StrokeThickness = 0,
+                    // This is how we get volume to scale - on a hidden YAxis
+                    YAxisId = Y_AXIS_VOLUME_ID,
+                    // This is how we colour volume bars red or green
+                    //PaletteProvider = new VolumePaletteProvider(
+                    //candleDataSeries,
+                    //appTheme.VividGreen + "77",
+                    //appTheme.MutedRed + "77"
+                    //)
+                };
+            await _sciChartSurface.RenderableSeries.Add(columnSeries);
+
+            // Optional = Add some interactivity modifiers
+            await _sciChartSurface.Modifiers.Add(new ZoomExtentsModifier());
+            await _sciChartSurface.Modifiers.Add(new MouseWheelZoomModifier());
+            await _sciChartSurface.Modifiers.Add(new ZoomPanModifier());
+            await _sciChartSurface.Modifiers.Add(new CursorModifier(){
+                            //CrosshairStroke = appTheme.VividOrange,
+                            //AxisLabelFill = appTheme.VividOrange,
+                            //TooltipLegendTemplate = getTooltipLegendTemplate
+                        });
+          
+
+// Add Overview chart. This will automatically bind to the parent surface
+// displaying its series. Zooming the chart will zoom the overview and vice versa
+//var  overview = await SciChartOverview.create(sciChartSurface, divOverviewId, {
+//    theme = appTheme.SciChartJsTheme,
+//    transformRenderableSeries = getOverviewSeries
+//    });
+
+        }
+    }
+}

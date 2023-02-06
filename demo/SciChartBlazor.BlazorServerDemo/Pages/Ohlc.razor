@@ -1,4 +1,4 @@
-﻿@page "/Candlestick"
+﻿@page "/ohlc"
 @using SciChartBlazor.Charts2D;
 @using SciChartBlazor.Charts2D.Model.Axes;
 @using SciChartBlazor.Charts2D.Model.DataSeries;
@@ -25,7 +25,7 @@
         {
             await _sciChartSurface.Initialize();
 
-            await _sciChartSurface.AddXAxis( new DateTimeNumericAxis());
+            await _sciChartSurface.AddXAxis( new CategoryAxis());
             await _sciChartSurface.AddYAxis( new NumericAxis());
 
 
@@ -50,14 +50,13 @@
             ohlcDataSeries.DataSeriesName = "oHLC";
             // ...
             // Declare and add a Candlestick Series
-            var candlestickSeries = new FastCandlestickRenderableSeries<double>(ohlcDataSeries)
+            var candlestickSeries = new FastOhlcRenderableSeries<double>(ohlcDataSeries)
                 {
                     StrokeUp = "Green",
                     // FillUp = "White",
                     StrokeDown = "Red",
                     // FillDown = "Yellow",
-                    /// AntiAliasing = false,
-                    DataPointWidth = 0.8,
+                    /// AntiAliasing = false, 
                     StrokeThickness = 1,
                 };
 

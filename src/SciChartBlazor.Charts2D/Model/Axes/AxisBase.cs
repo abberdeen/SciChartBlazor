@@ -24,7 +24,7 @@ public abstract class AxisBase : SciChartElementBase
     /// The visible range.
     /// </value>
 
-    public SciChartNumberRange? VisibleRange { get; set; } = null;
+    public NumberRange? VisibleRange { get; set; } = null;
 
     /// <summary>
     /// Gets or sets the grow by.
@@ -32,7 +32,7 @@ public abstract class AxisBase : SciChartElementBase
     /// <value>
     /// The grow by.
     /// </value>
-    public SciChartNumberRange? GrowBy { get; set; } = null;
+    public NumberRange? GrowBy { get; set; } = null;
 
     /// <summary>
     /// Gets or sets the axis title.
@@ -230,12 +230,12 @@ public abstract class AxisBase : SciChartElementBase
     /// <summary>
     /// Limits {@link AxisCore.visibleRange}, meaning the chart cannot autorange outside that range
     /// </summary>
-    public SciChartNumberRange? VisibleRangeLimit { get; set; } = null;
+    public NumberRange? VisibleRangeLimit { get; set; } = null;
 
     /// <summary>
     /// If this is set, it will be used as the range when zooming extents, rather than the data max range
     /// </summary>
-    private SciChartNumberRange? zoomExtentsRange { get; set; } = null; // this errors out.
+    private NumberRange? zoomExtentsRange { get; set; } = null; // this errors out.
 
     /// <summary>
     /// Gets or sets the axis border.

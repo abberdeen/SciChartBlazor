@@ -3,14 +3,14 @@
 /// <summary>
 /// 
 /// </summary>
-public class SciChartNumberRange
+public class NumberRange
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="SciChartNumberRange"/> class.
+    /// Initializes a new instance of the <see cref="NumberRange"/> class.
     /// </summary>
     /// <param name="min">The minimum.</param>
     /// <param name="max">The maximum.</param>
-    public SciChartNumberRange(double min, double max)
+    public NumberRange(double min, double max)
     {
         Max = max;
         Min = min;

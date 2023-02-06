@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SciChartBlazor.Charts2D.Model.Axes;
 using SciChartBlazor.Charts2D.Model.DataSeries;
 using SciChartBlazor.Charts2D.Services;
 using System;
@@ -62,7 +63,7 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
         
         public ModifiersService Modifiers => modifiers.Value;
         
-        public AxisService Axis => axis.Value;
+        // public AxisService Axis => axis.Value;
 
         [Parameter]
         public int Width { get; set; } = 800;
@@ -85,6 +86,16 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
 
         public async Task ZoomExtents() =>
             await  jsRuntime.InvokeVoidAsync(JSInteropCommand.ZoomExtents, _chartRoot);
+
+        public async Task AddXAxis(AxisBase xAxis)
+        {
+            await axis.Value.AddXAxis(xAxis);
+        }
+
+        public async Task AddYAxis(AxisBase yAsxis)
+        {
+            await axis.Value.AddYAxis(yAsxis);
+        }
 
         #endregion
 
