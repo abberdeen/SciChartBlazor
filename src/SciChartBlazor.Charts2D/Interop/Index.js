@@ -29,4 +29,6 @@ __exportStar(require("./Annotations"), exports);
 __exportStar(require("./Modifiers"), exports);
 __exportStar(require("./Axis"), exports);
 __exportStar(require("./Zoom"), exports);
+//export *  from "./Candlestick"
+//
 //# sourceMappingURL=Index.js.map

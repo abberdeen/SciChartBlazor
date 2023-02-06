@@ -14,7 +14,6 @@ export var Axis;
     function addXAxis(element, jsonString) {
         return __awaiter(this, void 0, void 0, function* () {
             const { sciChartSurface, wasmContext } = resolveContext(element);
-            console.log(sciChartSurface);
             sciChartSurface.xAxes.clear();
             const axis = chartBuilder.buildAxes(wasmContext, jsonString);
             sciChartSurface.xAxes.add(...axis);

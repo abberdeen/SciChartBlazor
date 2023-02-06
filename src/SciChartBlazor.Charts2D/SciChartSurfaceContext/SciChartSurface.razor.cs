@@ -32,7 +32,6 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
         {
             if (firstRender)
             {
-               // return Initialize();
             }
 
             return base.OnAfterRenderAsync(firstRender);

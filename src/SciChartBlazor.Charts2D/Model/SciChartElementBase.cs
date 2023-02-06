@@ -127,6 +127,11 @@ public abstract class SciChartElementBase
                             output.Options.Add(ConvertToCamelCase(property.Name), (int)value);
                             break;
                         }
+                    case DataSeriesType.OhlcData:
+                        {
+                            output.OhlcData = (DataSeriesBase)value;
+                            break;
+                        }
                     case DataSeriesType.XyData:
                         {
                             output.XyData = (DataSeriesBase)value;
@@ -207,6 +212,7 @@ public abstract class SciChartElementBase
         public string? Type { get; set; }
         public string? CustomType { get; set; }
         public Dictionary<string, object> Options { get; set; } = default!;
+        public DataSeriesBase? OhlcData { get; set; } = null;
         public DataSeriesBase? XyData { get; set; } = null;
         public DataSeriesBase? XyyData { get; set; } = null;
         public DataSeriesBase? XyzData { get; set; } = null;

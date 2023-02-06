@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/Candlestick"
 @using SciChartBlazor.Charts2D;
 @using SciChartBlazor.Charts2D.Model.Axes;
 @using SciChartBlazor.Charts2D.Model.DataSeries;
@@ -25,26 +25,14 @@
         {
             await _sciChartSurface.Initialize();
 
-            await _sciChartSurface.Axis.AddXAxis( new CategoryDateTimeAxis());
+            await _sciChartSurface.Axis.AddXAxis( new DateTimeNumericAxis());
             await _sciChartSurface.Axis.AddYAxis( new NumericAxis());
-            // ...
-            // Declare and add a Candlestick Series
-            var candlestickSeries = new FastCandlestickRenderableSeries<,>()
-                {
-                    StrokeUp = "Green",
-                    FillUp = "White",
-                    StrokeDown = "Red",
-                    FillDown = "Yellow",
-                    AntiAliasing = false,
-                    DataPointWidth = 0.8,
-                    StrokeThickness = 1,
-                }; 
-                
-            await    _sciChartSurface.RenderableSeries.Add(candlestickSeries);
+
 
             // Set some data
             // FastCandlestickRenderableSeries expects data in the formal Date, Open, High, Low, Close
-            var ohlcDataSeries = new OhlcDataSeries<DateTime, double, double, double>();
+            var ohlcDataSeries = new OhlcDataSeries<long, double>();
+
             ohlcDataSeries.Append(new DateTime(2015, 10, 1), 6061.60, 6172.80, 6053.30, 6072.50);
             ohlcDataSeries.Append(new DateTime(2015, 10, 2), 6072.50, 6176.20, 6051.60, 6130.00);
             ohlcDataSeries.Append(new DateTime(2015, 10, 5), 6130.00, 6301.10, 6130.00, 6298.90);
@@ -59,8 +47,21 @@
             ohlcDataSeries.Append(new DateTime(2015, 10, 16), 6338.70, 6398.20, 6338.70, 6378.00);
             ohlcDataSeries.Append(new DateTime(2015, 10, 17), 6378.00, 6408.10, 6336.30, 6352.30);
 
+            ohlcDataSeries.DataSeriesName = "oHLC";
+            // ...
+            // Declare and add a Candlestick Series
+            var candlestickSeries = new FastCandlestickRenderableSeries<long, double>(ohlcDataSeries)
+                {
+                    StrokeUp = "Green",
+                    // FillUp = "White",
+                    StrokeDown = "Red",
+                    // FillDown = "Yellow",
+                    /// AntiAliasing = false,
+                    DataPointWidth = 0.8,
+                    StrokeThickness = 1,
+                };
 
-            candlestickSeries.DataSeries = ohlcDataSeries;
+            await _sciChartSurface.RenderableSeries.Add(candlestickSeries);
         }
     }
 }

@@ -47,7 +47,6 @@ var Axis;
             var _b;
             return __generator(this, function (_c) {
                 _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
-                console.log(sciChartSurface);
                 sciChartSurface.xAxes.clear();
                 axis = scichart_1.chartBuilder.buildAxes(wasmContext, jsonString);
                 (_b = sciChartSurface.xAxes).add.apply(_b, axis);

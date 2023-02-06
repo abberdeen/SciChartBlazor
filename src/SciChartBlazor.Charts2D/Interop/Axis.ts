@@ -5,7 +5,6 @@ export namespace Axis
 {
     export async function addXAxis(element, jsonString) {
         const { sciChartSurface, wasmContext } = resolveContext(element);
-        console.log(sciChartSurface)
         sciChartSurface.xAxes.clear();
         const axis = chartBuilder.buildAxes(wasmContext, jsonString);
         sciChartSurface.xAxes.add(...axis);

@@ -11,7 +11,7 @@ namespace SciChartBlazor.Charts2D.Services
         /// <summary>
         /// Webpack module.exports.output.library
         /// </summary>
-        private const string Library = "sciChartBlazor";
+        public const string Library = "sciChartBlazor";
 
         /// <summary>
         ///

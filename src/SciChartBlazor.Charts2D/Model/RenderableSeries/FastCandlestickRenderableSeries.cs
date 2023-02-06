@@ -12,7 +12,7 @@ namespace SciChartBlazor.Charts2D.Model.RenderableSeries;
 /// <typeparam name="TLow">The type of the low.</typeparam>
 /// <typeparam name="TClose">The type of the close.</typeparam>
 /// <seealso cref="SciChartBlazor.RenderableSeries.RenderableSeriesBase" />
-public class FastCandlestickRenderableSeries<TOpen, THigh, TLow, TClose> : RenderableSeriesBase
+public class FastCandlestickRenderableSeries<TValue> : RenderableSeriesBase
 {
     /// <summary>
     /// The type of the element. Usually the name of the element in JS.
@@ -29,13 +29,14 @@ public class FastCandlestickRenderableSeries<TOpen, THigh, TLow, TClose> : Rende
     /// <value>
     /// The data series.
     /// </value>
+    [SciChartDataSeries(DataSeriesType.OhlcData)]
     public override DataSeriesBase DataSeries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FastCandlestickRenderableSeries{TOpen, THigh, TLow, TClose}"/> class.
     /// </summary>
     /// <param name="dataSeries">The data series.</param>
-    public FastCandlestickRenderableSeries(OhlcDataSeries<TOpen, THigh, TLow, TClose> dataSeries)
+    public FastCandlestickRenderableSeries(OhlcDataSeries<TValue> dataSeries)
     {
         DataSeries = dataSeries;
     }

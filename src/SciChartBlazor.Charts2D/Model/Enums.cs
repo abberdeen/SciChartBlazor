@@ -218,7 +218,8 @@
     {
         XyData,
         XyyData,
-        XyzData
+        XyzData,
+        OhlcData
     }
 
     public enum AxisType
