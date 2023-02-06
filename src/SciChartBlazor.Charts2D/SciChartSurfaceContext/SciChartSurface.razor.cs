@@ -28,36 +28,41 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
             await base.OnInitializedAsync(); 
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await Initialize();
-
-                renderableSeries = new Lazy<RenderableSeriesService>(
-                () => new RenderableSeriesService(jsRuntime, _chartRoot));
-
-                annotations = new Lazy<AnnotationsService>(
-                    () => new AnnotationsService(jsRuntime, _chartRoot));
-
-                modifiers = new Lazy<ModifiersService>(
-                   () => new ModifiersService(jsRuntime, _chartRoot));
-
-                axis = new Lazy<AxisService>(
-                    () => new AxisService(jsRuntime, _chartRoot));
+               // return Initialize();
             }
+
+            return base.OnAfterRenderAsync(firstRender);
         }
-         
-        protected async Task Initialize()
+
+        public async Task Initialize()
         {
             await jsRuntime.InvokeVoidAsync(JSInteropCommand.Init, _chartRoot);
+
+            renderableSeries = new Lazy<RenderableSeriesService>(
+              () => new RenderableSeriesService(jsRuntime, _chartRoot));
+
+            annotations = new Lazy<AnnotationsService>(
+                () => new AnnotationsService(jsRuntime, _chartRoot));
+
+            modifiers = new Lazy<ModifiersService>(
+               () => new ModifiersService(jsRuntime, _chartRoot));
+
+            axis = new Lazy<AxisService>(
+                () => new AxisService(jsRuntime, _chartRoot));
         }
 
         //public AxisBase XAxis { get; set; }
         //public AxisBase YAxis { get; set; }
         public RenderableSeriesService RenderableSeries => renderableSeries.Value;
+        
         public AnnotationsService Annotations => annotations.Value;
+        
         public ModifiersService Modifiers => modifiers.Value;
+        
         public AxisService Axis => axis.Value;
 
         [Parameter]
@@ -67,6 +72,23 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
         public int Height { get; set; } = 400;
 
         public string Id { get; private set; } = "scichart-root-" + Guid.NewGuid().ToString();
+
+        #region Serivces
+
+        /// <summary>
+        /// Zooms to a region in the X axis.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public async Task ZoomTo(double start, double end) =>
+            await jsRuntime.InvokeVoidAsync(JSInteropCommand.ZoomTo, _chartRoot, start, end);
+
+        public async Task ZoomExtents() =>
+            await  jsRuntime.InvokeVoidAsync(JSInteropCommand.ZoomExtents, _chartRoot);
+
+        #endregion
+
 
         public ValueTask DisposeAsync()
         {

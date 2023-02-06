@@ -2,6 +2,7 @@
 @using SciChartBlazor.Charts2D;
 @using SciChartBlazor.Charts2D.Model.Axes;
 @using SciChartBlazor.Charts2D.Model.DataSeries;
+@using SciChartBlazor.Charts2D.Model.Modifiers;
 @using SciChartBlazor.Charts2D.Model.PointMarkers;
 @using SciChartBlazor.Charts2D.Model.RenderableSeries;
 @using SciChartBlazor.Charts2D.Model;
@@ -14,78 +15,85 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
-
-<SciChartSurface Height="500" Width="900" >
-   
-
-   @* <XAxis>
-    <CategoryDateTimeAxis />
-    </XAxis>
-
-    <YAxis>
-    <NumericAxis />
-    </YAxis>*@
-</SciChartSurface>
-<FastCandlestickRenderableSeries @ref="_chart">
+@*
+<SciChartSurface Height="500" Width="900" >    
+</SciChartSurface>*@
+<FastCandlestickRenderableSeries @ref="_sciChartSurface">
 </FastCandlestickRenderableSeries>
 
 @code {
-    private SciChartSurface? _chart;
+    private SciChartSurface? _sciChartSurface;
 
     private List<Object> DataSeries = new List<Object>();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && _chart != null)
-        { 
+        if (firstRender && _sciChartSurface != null)
+        {
+            await _sciChartSurface.Initialize();
 
-            var XAxis = new NumericAxis()
+          
+            List<ModifierBase> modifiers = new()
+            {               
+                new ZoomExtentsModifier
                 {
-                    AxisTitle = "X",
-                    GrowBy = new SciChartNumberRange(0.05, 0.05),
-                    AxisTitleStyle = new AxisTitleStyle()
-                    {
-                        FontSize = 24,
-                        Color = "black",
-                    },
-                    MajorGridLineStyle = new MajorGridLineStyle()
-                    {
-                        StrokeThickness = 0
-                    },
-                    MinorGridLineStyle = new MinorGridLineStyle()
-                    {
-                        StrokeThickness = 0
-                    },
-                    VisibleRangeLimit = new SciChartNumberRange(0, 1000),
-                    AxisBorder = new AxisBorder() { BorderTop = 2 }
+                    IsAnimated = true,
+                    AnimationDuration = 400
+                },
+                new MouseWheelZoomModifier(),
+                new ZoomPanModifier() { ExecuteOn = ExecuteOn.MouseMiddleButton }
+            };
 
-                };
+            await _sciChartSurface.Modifiers.AddRange(modifiers);
+
+                var XAxis = new NumericAxis()
+            {
+                AxisTitle = "X",
+                GrowBy = new SciChartNumberRange(0.05, 0.05),
+                AxisTitleStyle = new AxisTitleStyle()
+                {
+                    FontSize = 24,
+                    Color = "black",
+                },
+                MajorGridLineStyle = new MajorGridLineStyle()
+                {
+                    StrokeThickness = 0
+                },
+                MinorGridLineStyle = new MinorGridLineStyle()
+                {
+                    StrokeThickness = 0
+                },
+                VisibleRangeLimit = new SciChartNumberRange(0, 1000),
+                AxisBorder = new AxisBorder() { BorderTop = 2}
+
+            };
             var YAxis = new NumericAxis()
+            {
+                AxisTitle = "Y",
+                AxisTitleStyle = new AxisTitleStyle()
                 {
-                    AxisTitle = "Y",
-                    AxisTitleStyle = new AxisTitleStyle()
-                    {
-                        FontSize = 24,
-                        Color = "black",
-                    },
-                    AxisAlignment = AxisAlignment.Left,
-                    AutoRange = AutoRange.Always,
-                    LabelFormat = NumericFormat.Decimal,
-                    MajorGridLineStyle = new MajorGridLineStyle()
-                    {
-                        StrokeThickness = 0
-                    },
-                    MinorGridLineStyle = new MinorGridLineStyle()
-                    {
-                        StrokeThickness = 0
-                    },
-                    AxisBorder = new AxisBorder() { BorderRight = 2 }
-                };
+                    FontSize = 24,
+                    Color = "black",
+                },
+                AxisAlignment = AxisAlignment.Left,
+                AutoRange = AutoRange.Always,
+                LabelFormat = NumericFormat.Decimal,
+                MajorGridLineStyle = new MajorGridLineStyle()
+                {
+                    StrokeThickness = 0
+                },
+                MinorGridLineStyle = new MinorGridLineStyle()
+                {
+                    StrokeThickness = 0
+                },
+                AxisBorder = new AxisBorder() { BorderRight = 2 }
+            };
 
             //currently have to do seperately
-            await _chart.Axis.AddXAxis(XAxis);
-            await _chart.Axis.AddYAxis(YAxis);
+            await _sciChartSurface.Axis.AddXAxis(XAxis);
+            await _sciChartSurface.Axis.AddYAxis(YAxis);
 
+            /////
             double[] x = new double[1000];
             double[] y = new double[1000];
 
@@ -95,22 +103,14 @@ Welcome to your new app.
                 y[i] = Math.Sin(i * 0.2) * 100;
             }
 
-            XyDataSeries<double, double> dataSeries = new(x, y) { DataSeriesName = "Data", ContainsNaN = false, DataIsSortedInX = true }; // using containsNaN = false and DataIsSortedInX speeds up data loading
+            XyDataSeries<double, double> dataSeries = new(x, y) { DataSeriesName = "Data", ContainsNaN = false, DataIsSortedInX = true };
             FastLineRenderableSeries<double, double> series = new(dataSeries)
                 {
                     Stroke = "black",
                     StrokeThickness = 1
                 };
 
-            await _chart.RenderableSeries.Add(series);
-            //  await _chart.Surface.RenderableSeries.Add( new FastLineRenderableSeries());
-            //  var xyDataSeries = new FastLineRenderableSeries()
-            //  {
-            //      Stroke = "#20f9bc",
-            //      StrokeThickness = 5,
-            //      DataSeries = DataSeries
-            //  };
-            //  await _chart.AddRenderableSeries(xyDataSeries);
+            await _sciChartSurface.RenderableSeries.Add(series);
         }
     }
 }

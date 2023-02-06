@@ -33,5 +33,14 @@ namespace SciChartBlazor.Charts2D.Services
         public static string AddXAxis => $"{Library}.Axis.addXAxis";
         public static string AddYAxis => $"{Library}.Axis.addYAxis";
 
+        public static string AddAnnotation => $"{Library}.Annotations.add";
+        public static string RemoveAnnotation => $"{Library}.Annotations.remove";
+        public static string ClearAnnotations => $"{Library}.Annotations.clear";
+
+        public static string AddModifier => $"{Library}.Modifiers.add";
+        public static string ClearModifiers => $"{Library}.Modifiers.clear";
+
+        public static string ZoomTo => $"{Library}.Zoom.zoomTo";
+        public static string ZoomExtents => $"{Library}.Zoom.zoomExtents";
     }
 }

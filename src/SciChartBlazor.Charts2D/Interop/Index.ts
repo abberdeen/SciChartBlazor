@@ -1,4 +1,4 @@
-﻿import { SciChartSurface } from "scichart";
+﻿import { OhlcDataSeries, SciChartSurface } from "scichart";
 
 //SciChartSurface.configure({
 //    wasmUrl: "/_content/SciChartBlazor.Charts2D/scichart2d.wasm",
@@ -19,4 +19,4 @@ export * from "./RenderableSeries"
 export * from "./Annotations" 
 export * from "./Modifiers" 
 export * from "./Axis" 
-export * from "./Zoom" 
+export * from "./Zoom"

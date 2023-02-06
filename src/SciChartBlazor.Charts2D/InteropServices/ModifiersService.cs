@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
-using SciChartBlazor.Charts2D.Model.DataSeries;
-using SciChartBlazor.Charts2D.Model.Annotations;
+using System.Threading.Tasks;
+using SciChartBlazor.Charts2D.Model.Modifiers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SciChartBlazor.Charts2D.Services
 {
@@ -17,20 +13,30 @@ namespace SciChartBlazor.Charts2D.Services
 
         private ElementReference _element;
 
+        // private List<ModifierBase> _modifiers = new();
+
         public ModifiersService(IJSRuntime jsRuntime, ElementReference element)
         { 
             this._element = element;
             this._jsRuntime = jsRuntime; 
         }
 
-        public async Task Add(AnnotationBase annotation)
+        public async Task Add(ModifierBase modifier)
         {
-
+            await _jsRuntime.InvokeVoidAsync(JSInteropCommand.AddModifier, _element, modifier.GetJson());
         }
 
-        public async Task Remove(AnnotationBase annotation)
+        public async Task AddRange(IEnumerable<ModifierBase> modifiers)
         {
+            foreach (var modifier in modifiers)
+            {
+                await Add(modifier);
+            }
+        }
 
+        public async Task Clear()
+        {
+            await _jsRuntime.InvokeVoidAsync(JSInteropCommand.ClearModifiers, _element);
         }
     }
 }
