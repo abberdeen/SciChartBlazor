@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLicenseKey = exports.unregister = exports.clear = exports.init = void 0;
 var scichart_1 = require("scichart");
 var SciChartContext_1 = require("./SciChartContext");
-function init(element) {
+function init(element, theme) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, sciChartSurface, wasmContext, newContext;
         return __generator(this, function (_b) {
@@ -47,7 +47,9 @@ function init(element) {
                 case 0:
                     _a = (0, SciChartContext_1.resolveContext)(element), sciChartSurface = _a.sciChartSurface, wasmContext = _a.wasmContext;
                     if (!(sciChartSurface === undefined)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, scichart_1.SciChartSurface.create(element.id)];
+                    return [4 /*yield*/, scichart_1.SciChartSurface.create(element.id, {
+                            theme: theme,
+                        })];
                 case 1:
                     newContext = _b.sent();
                     sciChartSurface = newContext.sciChartSurface;

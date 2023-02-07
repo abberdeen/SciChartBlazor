@@ -10,7 +10,7 @@ namespace SciChartBlazor.Charts2D.Model.DataSeries;
 /// <typeparam name="TY">The type of the y.</typeparam>
 /// <seealso cref="SciChartBlazor.DataSeries.DataSeriesBase" />
 [SciChartDataSeries(DataSeriesType.XyData)]
-public class XyDataSeries<TX, TY> : DataSeriesBase
+public class XyDataSeries<TX, TY> : BaseDataSeries
 {
     /// <summary>
     /// Gets the x values.

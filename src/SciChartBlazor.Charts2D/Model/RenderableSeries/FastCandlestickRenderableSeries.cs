@@ -30,7 +30,7 @@ public class FastCandlestickRenderableSeries<TValue> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.OhlcData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FastCandlestickRenderableSeries{TOpen, THigh, TLow, TClose}"/> class.

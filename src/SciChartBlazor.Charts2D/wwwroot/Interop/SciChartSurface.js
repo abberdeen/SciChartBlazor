@@ -9,14 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { SciChartSurface } from "scichart";
 import { resolveContext } from "./SciChartContext";
-export function init(element) {
+export function init(element, theme) {
     return __awaiter(this, void 0, void 0, function* () {
         let { sciChartSurface, wasmContext } = resolveContext(element);
         if (sciChartSurface === undefined) {
-            const newContext = yield SciChartSurface.create(element.id);
+            const newContext = yield SciChartSurface.create(element.id, {
+                theme,
+            });
             sciChartSurface = newContext.sciChartSurface;
             wasmContext = newContext.wasmContext;
             globalThis.chartInstances[element.id] = { sciChartSurface, wasmContext };
+            //   SciChartDefaults.enableResampling = true;
         }
     });
 }

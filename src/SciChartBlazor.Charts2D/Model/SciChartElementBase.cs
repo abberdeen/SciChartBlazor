@@ -41,7 +41,7 @@ public abstract class SciChartElementBase
     /// A converter for serializing Dataseries and interfaces.
     /// </summary>
 
-    public class DataSeriesConverter : JsonConverter<DataSeriesBase>
+    public class DataSeriesConverter : JsonConverter<BaseDataSeries>
     {
         /// <summary>
         /// Reads and converts the JSON to type.
@@ -53,7 +53,7 @@ public abstract class SciChartElementBase
         /// The converted value.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override DataSeriesBase Read(
+        public override BaseDataSeries Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
@@ -69,13 +69,13 @@ public abstract class SciChartElementBase
         /// <param name="options">An object that specifies serialization options to use.</param>
         public override void Write(
             Utf8JsonWriter writer,
-            DataSeriesBase value,
+            BaseDataSeries value,
             JsonSerializerOptions options)
         {
             switch (value)
             {
                 case null:
-                    JsonSerializer.Serialize(writer, (DataSeriesBase?)null, options);
+                    JsonSerializer.Serialize(writer, (BaseDataSeries?)null, options);
                     break;
                 default:
                     {
@@ -129,22 +129,22 @@ public abstract class SciChartElementBase
                         }
                     case DataSeriesType.OhlcData:
                         {
-                            output.OhlcData = (DataSeriesBase)value;
+                            output.OhlcData = (BaseDataSeries)value;
                             break;
                         }
                     case DataSeriesType.XyData:
                         {
-                            output.XyData = (DataSeriesBase)value;
+                            output.XyData = (BaseDataSeries)value;
                             break;
                         }
                     case DataSeriesType.XyyData:
                         {
-                            output.XyyData = (DataSeriesBase)value;
+                            output.XyyData = (BaseDataSeries)value;
                             break;
                         }
                     case DataSeriesType.XyzData:
                         {
-                            output.XyzData = (DataSeriesBase)value;
+                            output.XyzData = (BaseDataSeries)value;
                             break;
                         }
                     case HasOptions:
@@ -212,10 +212,10 @@ public abstract class SciChartElementBase
         public string? Type { get; set; }
         public string? CustomType { get; set; }
         public Dictionary<string, object> Options { get; set; } = default!;
-        public DataSeriesBase? OhlcData { get; set; } = null;
-        public DataSeriesBase? XyData { get; set; } = null;
-        public DataSeriesBase? XyyData { get; set; } = null;
-        public DataSeriesBase? XyzData { get; set; } = null;
+        public BaseDataSeries? OhlcData { get; set; } = null;
+        public BaseDataSeries? XyData { get; set; } = null;
+        public BaseDataSeries? XyyData { get; set; } = null;
+        public BaseDataSeries? XyzData { get; set; } = null;
     }
 }
 

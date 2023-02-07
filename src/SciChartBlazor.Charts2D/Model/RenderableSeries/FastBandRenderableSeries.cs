@@ -29,7 +29,7 @@ public class FastBandRenderableSeries<TX, TY1, TY2> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.XyyData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FastBandRenderableSeries{TX, TY1, TY2}"/> class.

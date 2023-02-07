@@ -30,7 +30,7 @@ public class FastOhlcRenderableSeries<TValue> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.OhlcData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Gets or sets the stroke up.

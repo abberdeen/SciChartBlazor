@@ -54,7 +54,7 @@ public class SplineBandRenderableSeries<TX, TY1, TY2> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.XyyData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Gets or sets the interpolation points.

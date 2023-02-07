@@ -28,7 +28,7 @@ public class UniformContoursRenderableSeries<TX, TY, TZ> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.XyzData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Gets the heatmap color map.

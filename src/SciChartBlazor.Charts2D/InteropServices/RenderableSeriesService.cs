@@ -47,7 +47,7 @@ namespace SciChartBlazor.Charts2D.Services
             this._renderableSeries.Remove(this._renderableSeries.First(x => x.Id == renderableSeriesId));
         }
 
-        public async Task Update(string renderableSeriesId, DataSeriesBase data)
+        public async Task Update(string renderableSeriesId, BaseDataSeries data)
         {
             await _jsRuntime.InvokeVoidAsync(JSInteropCommand.UpdateRenderableSeries, _element, renderableSeriesId, data.GetJson());
             // TODO: update _renderableSeries

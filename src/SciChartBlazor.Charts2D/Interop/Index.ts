@@ -1,4 +1,4 @@
-﻿import { NumericAxis, OhlcDataSeries, SciChartSurface } from "scichart";
+﻿import { NumericAxis, OhlcDataSeries, SciChartSurface, XyMovingAverageFilter } from "scichart";
 
 //SciChartSurface.configure({
 //    wasmUrl: "/_content/SciChartBlazor.Charts2D/scichart2d.wasm",
@@ -23,3 +23,5 @@ export * from "./Zoom"
 
 //export *  from "./Candlestick"
 //
+
+XyMovingAverageFilter

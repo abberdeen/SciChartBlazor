@@ -54,7 +54,7 @@ public class SplineMountainRenderableSeries<TX, TY> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.XyData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SplineMountainRenderableSeries{TX, TY}"/> class.

@@ -7,7 +7,7 @@
 /// <typeparam name="TY1">The type of the y1.</typeparam>
 /// <typeparam name="TY2">The type of the y2.</typeparam>
 /// <seealso cref="SciChartBlazor.DataSeries.DataSeriesBase" />
-public class XyyDataSeries<TX, TY1, TY2> : DataSeriesBase
+public class XyyDataSeries<TX, TY1, TY2> : BaseDataSeries
 {
     /// <summary>
     /// Gets the x values.

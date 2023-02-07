@@ -7,7 +7,7 @@
 /// <typeparam name="TY">The type of the y.</typeparam>
 /// <typeparam name="TZ">The type of the z.</typeparam>
 /// <seealso cref="SciChartBlazor.DataSeries.DataSeriesBase" />
-public class UniformHeatmapDataSeries<TX, TY, TZ> : DataSeriesBase
+public class UniformHeatmapDataSeries<TX, TY, TZ> : BaseDataSeries
 {
     /// <summary>
     /// Gets the x start.

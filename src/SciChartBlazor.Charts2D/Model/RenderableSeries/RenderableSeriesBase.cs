@@ -16,7 +16,7 @@ public abstract class RenderableSeriesBase : SciChartElementBase
     /// <value>
     /// The data series.
     /// </value>
-    public abstract DataSeriesBase DataSeries { get; }
+    public abstract BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Gets or sets the draw nan as.
@@ -50,6 +50,8 @@ public abstract class RenderableSeriesBase : SciChartElementBase
     /// The stroke thickness.
     /// </value>
     public double? StrokeThickness { get; set; }
+
+    public double? DataPointWidth { get; set; }
 
     /// <summary>
     /// Gets or sets the opacity.

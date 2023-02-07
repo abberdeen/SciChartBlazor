@@ -16,5 +16,5 @@ public class UniformHeatmapRenderableSeries : RenderableSeriesBase
     /// <summary>Gets the data series.</summary>
     /// <value>The data series.</value>
     /// <exception cref="System.NotImplementedException"></exception>
-    public override DataSeriesBase DataSeries => throw new NotImplementedException();
+    public override BaseDataSeries DataSeries => throw new NotImplementedException();
 }

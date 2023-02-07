@@ -13,7 +13,7 @@ namespace SciChartBlazor.Charts2D.Model.DataSeries;
 /// <typeparam name="TLow">The type of the low.</typeparam>
 /// <typeparam name="TClose">The type of the close.</typeparam>
 /// <seealso cref="SciChartBlazor.DataSeries.DataSeriesBase" />
-public class OhlcDataSeries<TValue> : DataSeriesBase
+public class OhlcDataSeries<TValue> : BaseDataSeries
 {
     /// <summary>
     /// the X-values (dates) encoded as a Unix Timestamp

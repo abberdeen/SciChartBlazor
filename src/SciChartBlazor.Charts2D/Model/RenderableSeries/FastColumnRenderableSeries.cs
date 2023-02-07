@@ -29,13 +29,13 @@ public class FastColumnRenderableSeries<TX, TY> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.XyData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FastColumnRenderableSeries{TX, TY}"/> class.
     /// </summary>
     /// <param name="dataSeries">The data series.</param>
-    public FastColumnRenderableSeries(XyDataSeries<TX, TX> dataSeries)
+    public FastColumnRenderableSeries(XyDataSeries<TX, TY> dataSeries)
     {
         DataSeries = dataSeries;
     }

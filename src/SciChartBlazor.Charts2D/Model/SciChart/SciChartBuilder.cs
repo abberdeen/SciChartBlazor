@@ -68,7 +68,7 @@ public class SciChartBuilder : IDisposable
     /// <returns></returns>
     public async Task CreateChart(SciChartThemeBase? theme = null, ICollection<ModifierBase>? modifiers = null)
     {
-        theme ??= new SciChartThemeLight();
+        theme ??= new SciChartLightTheme();
 
         await _sciChartBlazorService.SetRuntimeLicenseKey();
         _elementId = await _jsRuntime.InvokeAsync<string>("sciChartBlazorJson.initSciChart", _chart, theme);
@@ -273,7 +273,7 @@ public class SciChartBuilder : IDisposable
     /// <param name="renderableSeries"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public async Task UpdateRenderableSeries(RenderableSeriesBase renderableSeries, DataSeriesBase data) => await UpdateRenderableSeries(renderableSeries.Id, data);
+    public async Task UpdateRenderableSeries(RenderableSeriesBase renderableSeries, BaseDataSeries data) => await UpdateRenderableSeries(renderableSeries.Id, data);
 
     /// <summary>
     /// Update a renderable series. This is usually faster than creating a new one.
@@ -281,7 +281,7 @@ public class SciChartBuilder : IDisposable
     /// <param name="renderableSeriesId"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public async Task UpdateRenderableSeries(string renderableSeriesId, DataSeriesBase data)
+    public async Task UpdateRenderableSeries(string renderableSeriesId, BaseDataSeries data)
     {
         await _jsRuntime.InvokeVoidAsync("sciChartBlazorJson.updateSeries", _chart, renderableSeriesId, data.GetJson());
     }

@@ -23,7 +23,6 @@ public abstract class AxisBase : SciChartElementBase
     /// <value>
     /// The visible range.
     /// </value>
-
     public NumberRange? VisibleRange { get; set; } = null;
 
     /// <summary>
@@ -57,6 +56,11 @@ public abstract class AxisBase : SciChartElementBase
     /// The label precision.
     /// </value>
     public int LabelPrecision { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string LabelPrefix { get; set; } = string.Empty;
 
 
     /// <summary>

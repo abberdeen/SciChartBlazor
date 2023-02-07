@@ -62,6 +62,8 @@ public class CursorModifier : ModifierBase
     /// </value>
     public string? AxisLabelsFill { get; set; }
 
+    public string? AxisLabelFill { get; set; }
+
     /// <summary>
     /// Gets or sets the axis labels stroke.
     /// </summary>

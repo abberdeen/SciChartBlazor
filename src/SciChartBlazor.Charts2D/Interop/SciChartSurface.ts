@@ -1,14 +1,18 @@
 ﻿import { SciChartDefaults, SciChartJSLightTheme, SciChartSurface } from "scichart";
 import { resolveContext } from "./SciChartContext";
 
-export async function init(element) {     
+export async function init(element, theme) {     
     let { sciChartSurface, wasmContext } = resolveContext(element);
 
     if (sciChartSurface === undefined) {
-        const newContext = await SciChartSurface.create(element.id);
+        const newContext = await SciChartSurface.create(element.id, {
+            theme,
+        });
         sciChartSurface = newContext.sciChartSurface;
         wasmContext = newContext.wasmContext;
         globalThis.chartInstances[element.id] = { sciChartSurface, wasmContext };
+
+     //   SciChartDefaults.enableResampling = true;
     }
 }
 

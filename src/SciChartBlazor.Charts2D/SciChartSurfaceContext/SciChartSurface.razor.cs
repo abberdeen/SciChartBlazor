@@ -2,6 +2,7 @@
 using Microsoft.JSInterop;
 using SciChartBlazor.Charts2D.Model.Axes;
 using SciChartBlazor.Charts2D.Model.DataSeries;
+using SciChartBlazor.Charts2D.Model.Themes;
 using SciChartBlazor.Charts2D.Services;
 using System;
 using System.Collections.Generic;
@@ -38,9 +39,11 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
             return base.OnAfterRenderAsync(firstRender);
         }
 
-        public async Task Initialize()
+        public async Task Initialize(SciChartThemeBase? theme = null)
         {
-            await jsRuntime.InvokeVoidAsync(JSInteropCommand.Init, _chartRoot);
+            theme ??= new SciChartLightTheme();
+
+            await jsRuntime.InvokeVoidAsync(JSInteropCommand.Init, _chartRoot, theme);
 
             renderableSeries = new Lazy<RenderableSeriesService>(
               () => new RenderableSeriesService(jsRuntime, _chartRoot));
@@ -92,9 +95,9 @@ namespace SciChartBlazor.Charts2D.SciChartSurfaceContext
             await axis.Value.AddXAxis(xAxis);
         }
 
-        public async Task AddYAxis(AxisBase yAsxis)
+        public async Task AddYAxis(AxisBase yAxis)
         {
-            await axis.Value.AddYAxis(yAsxis);
+            await axis.Value.AddYAxis(yAxis);
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -18,16 +19,18 @@ namespace SciChartBlazor.BlazorServerDemo.Data
 
             if (startTime.HasValue)
             {
-                url += $"&startTime={new DateTimeOffset(startTime.Value).ToUnixTimeMilliseconds()}";
+                url += $"&startTime={startTime.Value.ToUnix()}";
             }
             if (endTime.HasValue)
             {
-                url += $"&endTime={new DateTimeOffset(endTime.Value).ToUnixTimeMilliseconds()}";
+                url += $"&endTime={endTime.Value.ToUnix()}";
             }
             url += $"&limit={limit}";
             
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            var doubleParse = (string input) => double.Parse(input, CultureInfo.InvariantCulture);
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
@@ -35,7 +38,7 @@ namespace SciChartBlazor.BlazorServerDemo.Data
             {
                 var content = reader.ReadToEnd();
 
-                var candles = JsonSerializer.Deserialize<List<long[]?>>(content);
+                var candles = JsonSerializer.Deserialize<List<List<dynamic>>>(content);
                
                 var list = new List<PriceBar>();
                 if (candles != null) 
@@ -44,12 +47,12 @@ namespace SciChartBlazor.BlazorServerDemo.Data
                     {
                         if (candle != null) {
                             var item = new PriceBar();
-                            item.date = candle[0] / 1000;
-                            item.open = candle[1];
-                            item.high = candle[2];
-                            item.low = candle[3];
-                            item.close = candle[4];
-                            item.volume = candle[5];
+                            item.date = long.Parse(candle[0].ToString()) / 1000;
+                            item.open = doubleParse(candle[1].ToString());
+                            item.high = doubleParse(candle[2].ToString());
+                            item.low = doubleParse(candle[3].ToString());
+                            item.close = doubleParse(candle[4].ToString());
+                            item.volume = doubleParse(candle[5].ToString());
                             list.Add(item);                       
                         }
                     }
@@ -62,11 +65,11 @@ namespace SciChartBlazor.BlazorServerDemo.Data
         public record PriceBar
         {
             public long date { get; set; }
-            public long open { get; set; }
-            public long high { get; set; }
-            public long low { get; set; }
-            public long close { get; set; }
-            public long volume { get; set; }
+            public double open { get; set; }
+            public double high { get; set; }
+            public double low { get; set; }
+            public double close { get; set; }
+            public double volume { get; set; }
         }
     }
 }

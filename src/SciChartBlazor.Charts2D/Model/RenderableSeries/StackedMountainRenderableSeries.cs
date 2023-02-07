@@ -44,7 +44,7 @@ public class StackedMountainRenderableSeries<TX, TY> : RenderableSeriesBase
     /// The data series.
     /// </value>
     [SciChartDataSeries(DataSeriesType.XyData)]
-    public override DataSeriesBase DataSeries { get; }
+    public override BaseDataSeries DataSeries { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StackedMountainRenderableSeries{TX, TY}"/> class.
